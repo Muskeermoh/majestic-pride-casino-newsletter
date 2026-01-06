@@ -1,0 +1,437 @@
+/* NewsList styles - appetizing theme */
+
+/* body is styled in index.css; here we scope styles for the newsletter area */
+
+.news-grid-container {
+  position: relative;
+  padding: 10px 6px 60px 6px;
+}
+
+.news-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 26px;
+  align-items: stretch;
+}
+
+.news-card {
+  background: linear-gradient(145deg, rgba(255,250,245,0.98) 0%, rgba(255,243,234,0.95) 100%);
+  backdrop-filter: blur(12px);
+  border-radius: 18px;
+  box-shadow: 0 8px 32px rgba(139,46,46,0.08), 0 2px 8px rgba(139,46,46,0.04);
+  overflow: hidden;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  display: flex;
+  flex-direction: column;
+  border: 1.5px solid rgba(240,208,176,0.6);
+  position: relative;
+  height: 100%;
+  cursor: pointer;
+}
+
+.news-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, #ffd79a, #d69a57, #e8b37a);
+  opacity: 0;
+  transition: opacity 0.4s;
+}
+
+.news-card:hover { 
+  transform: translateY(-12px) scale(1.02); 
+  box-shadow: 0 20px 60px rgba(139,46,46,0.16), 0 8px 24px rgba(139,46,46,0.08);
+  border-color: rgba(214,154,87,0.8);
+}
+
+.news-card:hover::before {
+  opacity: 1;
+}
+
+.news-card:active {
+  transform: translateY(-8px) scale(1.01);
+  box-shadow: 0 12px 40px rgba(139,46,46,0.14), 0 4px 16px rgba(139,46,46,0.08);
+}
+
+/* entrance animation - staggered via --delay inline style */
+.news-card {
+  opacity: 0;
+  transform: translateY(18px);
+  animation: cardIn 680ms cubic-bezier(.2,.9,.2,1) forwards;
+  animation-delay: var(--delay, 0ms);
+}
+
+@keyframes cardIn {
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.news-image { 
+  width:100%; 
+  height:220px; 
+  object-fit:cover; 
+  border-bottom:4px solid #e8b37a; 
+  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  flex-shrink: 0;
+}
+
+.news-card:hover .news-image { 
+  transform: scale(1.08); 
+  filter: brightness(1.08) contrast(1.05) saturate(1.1);
+}
+
+.news-card:active .news-image {
+  transform: scale(1.05);
+  filter: brightness(1.05) contrast(1.03) saturate(1.05);
+}
+
+.news-content { 
+  padding:22px; 
+  display:flex; 
+  flex-direction:column; 
+  gap:12px; 
+  background: linear-gradient(180deg, transparent 0%, rgba(255,247,239,0.4) 100%);
+  flex-grow: 1;
+}
+
+.news-title { 
+  font-family:'Merriweather', serif; 
+  color:#7b2b2b; 
+  font-size:1.28rem; 
+  margin:0; 
+  position:relative; 
+  overflow:hidden;
+  font-weight: 700;
+  line-height: 1.4;
+  letter-spacing: 0.3px;
+  transition: color 0.3s ease;
+}
+
+.news-card:hover .news-title {
+  color: #a63838;
+}
+
+/* subtle shimmer highlight over title */
+.news-title::after {
+  content: '';
+  position: absolute;
+  left: -120%;
+  top: 0;
+  height: 100%;
+  width: 120%;
+  background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.45) 50%, transparent 100%);
+  transform: skewX(-18deg);
+  opacity: 0.0;
+  transition: opacity 220ms;
+}
+.news-card:hover .news-title::after { opacity: 1; animation: titleShimmer 1.2s ease; }
+
+@keyframes titleShimmer {
+  from { left: -120%; }
+  to { left: 120%; }
+}
+.news-date { 
+  color:#a67c52; 
+  font-size:0.92rem; 
+  margin:0 0 8px 0; 
+  font-weight: 500;
+  display: inline-block;
+  padding: 4px 12px;
+  background: rgba(214,154,87,0.12);
+  border-radius: 20px;
+  letter-spacing: 0.5px;
+}
+.news-text { 
+  color:#3b2b2b; 
+  font-size:1.02rem; 
+  margin:0 0 12px 0; 
+  line-height: 1.7;
+  font-weight: 400;
+}
+
+.news-text-truncated {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-height: 5.1em;
+}
+
+.read-more-btn {
+  background: linear-gradient(135deg, #8b2e2e 0%, #a63838 100%);
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 10px 20px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 3px 10px rgba(139,46,46,0.25);
+  letter-spacing: 0.5px;
+  font-family: 'Poppins', sans-serif;
+  width: 100%;
+  margin-top: auto;
+  position: relative;
+  overflow: hidden;
+}
+
+.read-more-btn::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.2);
+  transform: translate(-50%, -50%);
+  transition: width 0.6s, height 0.6s;
+}
+
+.read-more-btn:hover {
+  background: linear-gradient(135deg, #6c2323 0%, #8b2e2e 100%);
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(139,46,46,0.35);
+}
+
+.read-more-btn:hover::before {
+  width: 300px;
+  height: 300px;
+}
+
+.read-more-btn:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 8px rgba(139,46,46,0.3);
+}
+
+/* Modal Styles */
+.news-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.75);
+  backdrop-filter: blur(8px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10000;
+  padding: 20px;
+  animation: fadeIn 0.3s ease;
+  overflow-y: auto;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.news-modal {
+  background: linear-gradient(145deg, rgba(255,250,245,0.98) 0%, rgba(255,243,234,0.97) 100%);
+  border-radius: 20px;
+  width: 100%;
+  max-width: 800px;
+  max-height: 85vh;
+  margin: auto;
+  overflow-y: auto;
+  box-shadow: 0 25px 70px rgba(0,0,0,0.3), 0 10px 30px rgba(0,0,0,0.2);
+  border: 2px solid rgba(214,154,87,0.5);
+  position: relative;
+  animation: modalSlideIn 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@keyframes modalSlideIn {
+  from { 
+    opacity: 0;
+    transform: translateY(-30px) scale(0.95);
+  }
+  to { 
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.modal-close {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #8b2e2e 0%, #a63838 100%);
+  border: none;
+  color: #fff;
+  font-size: 28px;
+  font-weight: bold;
+  cursor: pointer;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(139,46,46,0.3);
+  line-height: 1;
+}
+
+.modal-close:hover {
+  background: linear-gradient(135deg, #6c2323 0%, #8b2e2e 100%);
+  transform: rotate(90deg) scale(1.1);
+}
+
+.modal-image {
+  width: 100%;
+  height: 350px;
+  object-fit: cover;
+  border-radius: 18px 18px 0 0;
+  border-bottom: 4px solid #e8b37a;
+}
+
+.modal-content {
+  padding: 28px;
+  max-height: calc(85vh - 350px);
+  overflow-y: auto;
+}
+
+.modal-title {
+  font-family: 'Merriweather', serif;
+  color: #7b2b2b;
+  font-size: 1.8rem;
+  font-weight: 700;
+  margin: 0 0 12px 0;
+  line-height: 1.3;
+  letter-spacing: 0.5px;
+  padding-right: 40px;
+}
+
+.modal-date {
+  color: #a67c52;
+  font-size: 0.9rem;
+  margin: 0 0 18px 0;
+  font-weight: 500;
+  display: inline-block;
+  padding: 6px 16px;
+  background: rgba(214,154,87,0.15);
+  border-radius: 20px;
+  letter-spacing: 0.5px;
+}
+
+.modal-text {
+  color: #3b2b2b;
+  font-size: 1.05rem;
+  line-height: 1.8;
+  margin: 0;
+  font-weight: 400;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+}
+
+@media (max-width: 768px) {
+  .news-modal {
+    max-height: 90vh;
+    margin: 10px;
+  }
+  
+  .modal-image {
+    height: 200px;
+  }
+  
+  .modal-content {
+    padding: 20px;
+    max-height: calc(90vh - 200px);
+  }
+  
+  .modal-title {
+    font-size: 1.4rem;
+  }
+  
+  .modal-text {
+    font-size: 1rem;
+  }
+}
+
+/* Large player (in-flow) */
+.live-tv-box.live-tv-large { position: relative; margin: 0 auto 24px auto; width:100%; max-width:900px; height:420px; background:#2b1f1a; border:3px solid #d69a57; border-radius:14px; overflow:hidden; }
+@media (max-width:1000px) { .live-tv-box.live-tv-large { height:36vw; min-height:220px; } }
+.live-tv-box.live-tv-hidden { opacity:0; pointer-events:none; height:0 !important; margin:0 !important; }
+
+/* Mini portal (floats over everything) */
+.live-tv-portal { position: fixed !important; bottom:18px !important; right:18px !important; z-index:9999 !important; }
+.live-tv-box.live-tv-fixed.live-tv-mini { width:240px; height:140px; border-radius:12px; overflow:hidden; border:2px solid #d69a57; box-shadow:0 18px 48px rgba(0,0,0,0.35); background:linear-gradient(180deg,#2b1f1a 0%, #5a392f 100%); transform-origin:bottom right; }
+@media (max-width:600px){ .live-tv-box.live-tv-fixed.live-tv-mini { right:12px; bottom:12px; width:200px; height:120px; } }
+.live-tv-box.live-tv-fixed.live-tv-mini:hover { transform:scale(1.04); }
+
+.live-tv-close { position:absolute; top:8px; right:10px; width:32px; height:32px; border-radius:50%; background:#ffd79a; border:none; color:#4a2b2b; font-weight:bold; cursor:pointer; }
+
+/* Footer Styles */
+.newsletter-footer {
+  margin-top: 60px;
+  padding: 32px 20px;
+  background: linear-gradient(135deg, rgba(139,46,46,0.95) 0%, rgba(123,43,43,0.98) 100%);
+  border-radius: 16px;
+  text-align: center;
+  box-shadow: 0 -4px 20px rgba(139,46,46,0.2);
+}
+
+.footer-content {
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.social-icons {
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.social-icon {
+  width: 50px;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255,255,255,0.1);
+  border-radius: 50%;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-size: 1.4rem;
+  border: 2px solid rgba(255,215,154,0.3);
+}
+
+.social-icon:hover {
+  background: rgba(255,215,154,0.2);
+  transform: translateY(-4px) scale(1.1);
+  border-color: #ffd79a;
+  box-shadow: 0 6px 16px rgba(255,215,154,0.4);
+}
+
+.footer-date {
+  color: rgba(255,255,255,0.85);
+  font-size: 1rem;
+  margin: 0;
+  font-weight: 500;
+  letter-spacing: 0.5px;
+}
+
+@media (max-width: 768px) {
+  .newsletter-footer {
+    margin-top: 40px;
+    padding: 24px 15px;
+  }
+  
+  .social-icon {
+    width: 44px;
+    height: 44px;
+    font-size: 1.2rem;
+  }
+  
+  .footer-date {
+    font-size: 0.9rem;
+  }
+}
